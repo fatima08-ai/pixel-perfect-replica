@@ -79,7 +79,7 @@ function inheritors(base: string, files: CodeFile[]) {
     lines.forEach((l, i) => {
       re.lastIndex = 0;
       const m = re.exec(l);
-      if (m) res.push({ cls: m[1], file: f.path, line: i + 1 });
+      if (m) res.push({ cls: m[1] ?? "", file: f.path, line: i + 1 });
     });
   }
   return res;
@@ -97,7 +97,7 @@ export function composeAnswer(query: string, sources: Source[], files: CodeFile[
 
   const inheritMatch = query.match(/inherit\w*\s+from\s+`?(\w+)`?/i) ?? query.match(/subclass\w*\s+of\s+`?(\w+)`?/i);
   if (inheritMatch) {
-    const base = inheritMatch[1];
+    const base = inheritMatch[1] ?? "";
     const found = inheritors(base, files);
     if (found.length) {
       parts.push(`I found **${found.length}** class${found.length > 1 ? "es" : ""} inheriting from \`${base}\`:`);
