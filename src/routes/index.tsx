@@ -31,7 +31,7 @@ export const Route = createFileRoute("/")({
 });
 
 function App() {
-  const { chats, createChat, hydrated } = useStore();
+  const { chats, createChat, hydrated, index } = useStore();
   const bp = useBreakpoint();
   const [activeId, setActiveId] = useState<string | null>(null);
   const [selectedMsg, setSelectedMsg] = useState<string | null>(null);
@@ -147,7 +147,7 @@ function App() {
       </Button>
       {(bp === "phone" || !sidebarOpen) && <Logo className="text-sm" />}
       <span className="min-w-0 flex-1 truncate px-2 text-sm text-muted-foreground">{chat?.title}</span>
-      {bp === "phone" && <StatusBadge status={useStore.length ? "ready" : "ready"} />}
+      {bp === "phone" && <StatusBadge status={index.status} />}
       {bp !== "desktop" && (
         <Button variant="outline" size="sm" className="h-11" onClick={() => setCtxOpen(true)} aria-label="Show retrieved sources">
           <Layers /> Sources{sources.length ? ` (${sources.length})` : ""}
