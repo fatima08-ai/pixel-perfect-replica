@@ -277,3 +277,12 @@
 .answer table { width: 100%; font-size: 0.85rem; border-collapse: collapse; display: block; overflow-x: auto; }
 .answer th, .answer td { border: 1px solid var(--border); padding: 0.35rem 0.6rem; text-align: left; }
 .answer blockquote { border-left: 3px solid var(--primary); padding-left: 0.75rem; color: var(--muted-foreground); }
+.answer .cite-inline {
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.35rem;
+  background: oklch(from var(--primary) l c h / 15%);
+  color: var(--primary);
+  text-decoration: underline dotted;
+}

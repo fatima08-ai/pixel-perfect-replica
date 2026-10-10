@@ -32,7 +32,9 @@ export function CodeBlock({ code, language }: { code: string; language: string }
   );
 }
 
-export function Markdown({ content }: { content: string }) {
+export const CITE_RE = /^([\w./-]+\.\w+):(\d+)-(\d+)$/;
+
+export function Markdown({ content, onCite }: { content: string; onCite?: (cite: string) => void }) {
   return (
     <div className="answer">
       <ReactMarkdown
@@ -45,6 +47,12 @@ export function Markdown({ content }: { content: string }) {
             if (match || text.includes("\n")) {
               return <CodeBlock code={text.replace(/\n$/, "")} language={match?.[1] ?? "text"} />;
             }
+            if (onCite && CITE_RE.test(text))
+              return (
+                <button type="button" className="cite-inline" onClick={() => onCite(text)} aria-label={`Open ${text}`}>
+                  {text}
+                </button>
+              );
             return <code>{children}</code>;
           },
         }}
