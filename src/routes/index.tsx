@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { ChatView } from "@/components/rag/ChatView";
 import { ContextPanel } from "@/components/rag/ContextPanel";
 import { FilePreview, type PreviewTarget } from "@/components/rag/FilePreview";
-import { Logo, StatusBadge } from "@/components/rag/primitives";
+import { Logo } from "@/components/rag/primitives";
 import { SettingsDialog } from "@/components/rag/SettingsDialog";
 import { Sidebar } from "@/components/rag/Sidebar";
 import { Button } from "@/components/ui/button";
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/")({
 });
 
 function App() {
-  const { chats, createChat, hydrated, index } = useStore();
+  const { chats, createChat, hydrated } = useStore();
   const bp = useBreakpoint();
   const [activeId, setActiveId] = useState<string | null>(null);
   const [selectedMsg, setSelectedMsg] = useState<string | null>(null);
@@ -146,8 +146,7 @@ function App() {
         {bp === "phone" ? <Menu /> : <PanelLeft />}
       </Button>
       {(bp === "phone" || !sidebarOpen) && <Logo className="text-sm" />}
-      <span className="min-w-0 flex-1 truncate px-2 text-sm text-muted-foreground">{chat?.title}</span>
-      {bp === "phone" && <StatusBadge status={index.status} />}
+      <span className="min-w-0 flex-1 truncate px-2 text-sm text-muted-foreground">{bp !== "phone" && chat?.title}</span>
       {bp !== "desktop" && (
         <Button variant="outline" size="sm" className="h-11" onClick={() => setCtxOpen(true)} aria-label="Show retrieved sources">
           <Layers /> Sources{sources.length ? ` (${sources.length})` : ""}

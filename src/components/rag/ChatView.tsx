@@ -46,8 +46,9 @@ export function ChatView({
 
   useEffect(() => onStreamingChange(!!streamingId), [streamingId, onStreamingChange]);
   useEffect(() => () => abortRef.current?.abort(), []);
+  const streamChat = useRef<string | null>(null);
   useEffect(() => {
-    abortRef.current?.abort();
+    if (streamChat.current && streamChat.current !== chatId) abortRef.current?.abort();
     inputRef.current?.focus();
   }, [chatId]);
 
@@ -63,6 +64,7 @@ export function ChatView({
     async (id: string, query: string, assistantId: string) => {
       const ctrl = new AbortController();
       abortRef.current = ctrl;
+      streamChat.current = id;
       setStreamingId(assistantId);
       onSelectMessage(assistantId);
       const patch = (fn: (m: ChatMessage) => ChatMessage) =>
@@ -84,6 +86,7 @@ export function ChatView({
       } finally {
         setStreamingId(null);
         abortRef.current = null;
+        streamChat.current = null;
       }
     },
     [files, settings, updateChat, onSelectMessage],
