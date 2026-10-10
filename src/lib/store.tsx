@@ -87,7 +87,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           });
         }
       }
-    }, 300);
+    }, wait);
     return () => clearTimeout(t);
   }, [files, chats, settings, index, hydrated]);
 
