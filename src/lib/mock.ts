@@ -114,7 +114,7 @@ export function composeAnswer(query: string, sources: Source[], files: CodeFile[
         .map(([p, defs]) => `- \`${p}\`${defs.length ? ` — defines ${defs.map((d) => `\`${d}\``).join(", ")}` : ""}`)
         .join("\n"),
     );
-  } else {
+  } else if (top) {
     const defs = top ? definitions(top.snippet) : [];
     parts.push(
       `The most relevant code is in \`${top.file}\` (lines ${top.startLine}–${top.endLine})` +
