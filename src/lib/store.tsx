@@ -38,7 +38,10 @@ interface Store extends Persisted {
   toggleTheme: () => void;
 }
 
-const Ctx = createContext<Store | null>(null);
+// Keep one context instance across hot reloads; otherwise a re-evaluated module
+// creates a new context that the already-mounted provider doesn't supply.
+const g = globalThis as { __ragscriptStoreCtx?: React.Context<Store | null> };
+const Ctx = (g.__ragscriptStoreCtx ??= createContext<Store | null>(null));
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export function StoreProvider({ children }: { children: ReactNode }) {
