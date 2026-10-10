@@ -61,7 +61,7 @@ export function SettingsDialog({ open, onOpenChange }: { open: boolean; onOpenCh
               <Label htmlFor="topk">Chunks to retrieve</Label>
               <span className="font-mono text-sm">{draft.topK}</span>
             </div>
-            <Slider id="topk" min={1} max={10} step={1} value={[draft.topK]} onValueChange={([v]) => setDraft({ ...draft, topK: v })} aria-label="Chunks to retrieve" />
+            <Slider id="topk" min={1} max={10} step={1} value={[draft.topK]} onValueChange={([v]) => setDraft({ ...draft, topK: v ?? draft.topK })} aria-label="Chunks to retrieve" />
           </div>
           <div className="flex items-center justify-between gap-4 rounded-lg border p-3">
             <div>

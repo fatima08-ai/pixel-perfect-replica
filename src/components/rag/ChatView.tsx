@@ -115,7 +115,7 @@ export function ChatView({
     if (!q) return;
     updateChat(chat.id, (c) => ({
       ...c,
-      messages: c.messages.map((m) => (m.id === msgId ? { ...m, content: "", sources: [], error: undefined, feedback: null } : m)),
+      messages: c.messages.map((m) => (m.id === msgId ? (({ error: _e, ...rest }) => ({ ...rest, content: "", sources: [], feedback: null }))(m) : m)),
     }));
     void run(chat.id, q, msgId);
   }
@@ -128,7 +128,7 @@ export function ChatView({
     }));
 
   const citeFromText = (m: ChatMessage) => (text: string) => {
-    const [, name, a, b] = CITE_RE.exec(text)!;
+    const [, name = "", a = "0", b = "0"] = CITE_RE.exec(text) ?? [];
     const s =
       m.sources?.find((x) => x.file.endsWith(name) && x.startLine === +a && x.endLine === +b) ??
       ({ file: files.find((f) => f.path.endsWith(name))?.path ?? name, startLine: +a, endLine: +b, score: 0, snippet: "" } as Source);
@@ -173,8 +173,8 @@ export function ChatView({
                     type="button"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 + i * 0.07 }}
                     {...springTap}
+                    transition={{ delay: 0.1 + i * 0.07 }}
                     onClick={() => send(s)}
                     className="min-h-11 rounded-lg border bg-card/70 px-4 py-3 text-left text-sm backdrop-blur hover:border-primary/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >

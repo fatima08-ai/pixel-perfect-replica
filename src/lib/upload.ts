@@ -83,8 +83,8 @@ export async function readPicked(
   emit();
   const files: CodeFile[] = [];
   for (let i = 0; i < relevant.length; i++) {
-    const { file, path } = relevant[i];
-    const item = items[i];
+    const { file, path } = relevant[i]!;
+    const item = items[i]!;
     if (!isSupported(path)) {
       Object.assign(item, { state: "rejected", reason: "Unsupported file type" });
       emit();
