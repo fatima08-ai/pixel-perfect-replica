@@ -71,9 +71,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setHydrated(true);
   }, []);
 
+  const lastSave = useRef(0);
   useEffect(() => {
     if (!hydrated) return;
+    const wait = Math.max(0, 300 - (Date.now() - lastSave.current));
     const t = setTimeout(() => {
+      lastSave.current = Date.now();
       try {
         localStorage.setItem(KEY, JSON.stringify({ files, chats, settings, index }));
       } catch {

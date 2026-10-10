@@ -37,6 +37,7 @@ export function IndexingProgress() {
                 strokeLinecap="round"
                 className="stroke-primary"
                 strokeDasharray={C}
+                initial={{ strokeDashoffset: C }}
                 animate={{ strokeDashoffset: C * (1 - pct) }}
                 transition={{ ease: "easeOut" }}
               />

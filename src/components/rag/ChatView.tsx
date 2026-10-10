@@ -208,8 +208,9 @@ export function ChatView({
                       {!m.content && !m.error && streamingId === m.id ? (
                         <TypingDots />
                       ) : (
-                        <div className={cn(streamingId === m.id && "stream-cursor")}>
+                        <div>
                           <Markdown content={m.content} onCite={citeFromText(m)} />
+                          {streamingId === m.id && <span className="stream-cursor" aria-hidden />}
                         </div>
                       )}
                       {m.error && (
