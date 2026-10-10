@@ -44,7 +44,7 @@ function App() {
   const [streaming, setStreaming] = useState(false);
 
   useEffect(() => {
-    if (hydrated && !activeId && chats.length) setActiveId(chats[0].id);
+    if (hydrated && !activeId && chats.length) setActiveId(chats[0]!.id);
     if (activeId && !chats.some((c) => c.id === activeId)) setActiveId(chats[0]?.id ?? null);
   }, [hydrated, chats, activeId]);
 
